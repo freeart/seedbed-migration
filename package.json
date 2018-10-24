@@ -1,0 +1,14 @@
+{
+  "name": "seedbed-migration",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^1.4.1",
+    "async": "^2.6.1",
+    "etcd-fb": "^1.1.2",
+    "moment": "^2.22.2"
+  }
+}

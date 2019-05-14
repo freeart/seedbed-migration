@@ -1,6 +1,5 @@
 const assert = require('assert'),
-	async = require('async'),
-	configStorage = require('etcd-fb')
+	async = require('async')
 
 module.exports = function () {
 	assert(!this.migration, "field exists")
@@ -37,34 +36,12 @@ module.exports = function () {
 						}
 					}, cb);
 				}, cb);
-			},
-			directory: (migrate, cb) => {
-				configStorage.set(`/${process.env.NODE_ENV}/discovery/${config.instance}/`, null, { ttl: 25 }, (err) => {
-					if (err) {
-						console.log(err)
-					}
-					cb()
-				})
-			},
-			unlock: (directory, cb) => {
-				configStorage.set(`${process.env.NODE_ENV}/discovery/${config.instance}/ready`, "1", null, cb)
 			}
 		}, (err) => {
 			if (err) {
 				return console.error(err);
 			}
 			console.log("done")
-			async.forever(
-				(next) => {
-					configStorage.refresh(`${process.env.NODE_ENV}/discovery/${config.instance}/`, { ttl: 25 }, (err) => {
-						if (err) {
-							console.error(err);
-							return setTimeout(() => process.exit(1), 1000)
-						}
-						setTimeout(() => next(), 5000)
-					})
-				}
-			)
 		})
 	}
 
